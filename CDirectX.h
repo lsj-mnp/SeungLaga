@@ -4,13 +4,11 @@
 class CDirectX
 {
 public:
-	CDirectX() {};
+	CDirectX(HINSTANCE hInstance) : m_hInstance{ hInstance } {};
 	~CDirectX() {};
 
-	void Create(HINSTANCE hInstance, int nShowCmd, WNDPROC WndProc, const char* WindowName, int Width, int Height)
+	void Create(int nShowCmd, WNDPROC WndProc, const char* WindowName, int Width, int Height)
 	{
-		m_hInstance = hInstance;
-
 		WNDCLASSEX wnd_cls{};
 		wnd_cls.cbClsExtra = 0;
 		wnd_cls.cbSize = sizeof(WNDCLASSEX);
@@ -18,7 +16,7 @@ public:
 		wnd_cls.hbrBackground = (HBRUSH)GetStockObject(GRAY_BRUSH);
 		wnd_cls.hCursor = LoadCursor(nullptr, IDC_ARROW);
 		wnd_cls.hIcon = wnd_cls.hIconSm = LoadIcon(nullptr, IDI_APPLICATION);
-		wnd_cls.hInstance = hInstance;
+		wnd_cls.hInstance = m_hInstance;
 		wnd_cls.lpfnWndProc = WndProc;
 		wnd_cls.lpszClassName = "Practice";
 		wnd_cls.lpszMenuName = nullptr;
@@ -27,7 +25,7 @@ public:
 		RegisterClassEx(&wnd_cls);
 
 		m_hWnd = CreateWindowEx(0, "Practice", WindowName, WS_OVERLAPPEDWINDOW,
-			CW_USEDEFAULT, CW_USEDEFAULT, Width, Height, nullptr, nullptr, hInstance, nullptr);
+			CW_USEDEFAULT, CW_USEDEFAULT, Width, Height, nullptr, nullptr, m_hInstance, nullptr);
 
 		ShowWindow(m_hWnd, nShowCmd);
 
