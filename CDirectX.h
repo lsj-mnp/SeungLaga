@@ -7,8 +7,10 @@ public:
 	CDirectX() {};
 	~CDirectX() {};
 
-	void Create(HINSTANCE hInstance, int nShowCmd, WNDPROC WndProc)
+	void Create(HINSTANCE hInstance, int nShowCmd, WNDPROC WndProc, const char* WindowName, int Width, int Height)
 	{
+		m_hInstance = hInstance;
+
 		WNDCLASSEX wnd_cls{};
 		wnd_cls.cbClsExtra = 0;
 		wnd_cls.cbSize = sizeof(WNDCLASSEX);
@@ -24,14 +26,15 @@ public:
 
 		RegisterClassEx(&wnd_cls);
 
-		HWND hWnd{ CreateWindowEx(0, "Practice", "window", WS_OVERLAPPEDWINDOW,
-			CW_USEDEFAULT, CW_USEDEFAULT, 900, 500, nullptr, nullptr, hInstance, nullptr) };
+		m_hWnd = CreateWindowEx(0, "Practice", WindowName, WS_OVERLAPPEDWINDOW,
+			CW_USEDEFAULT, CW_USEDEFAULT, Width, Height, nullptr, nullptr, hInstance, nullptr);
 
-		ShowWindow(hWnd, nShowCmd);
+		ShowWindow(m_hWnd, nShowCmd);
 
-		UpdateWindow(hWnd);
+		UpdateWindow(m_hWnd);
 	}
 
 private:
-
+	HWND m_hWnd{};
+	HINSTANCE m_hInstance{};
 };
