@@ -4,12 +4,16 @@
 class CDirectX
 {
 public:
-	CDirectX(HINSTANCE hInstance) : m_hInstance{ hInstance } {};
+	CDirectX(HINSTANCE hInstance, float Width, float Height) :
+		m_hInstance{ hInstance }, m_Width{ Width }, m_Height{ Height } {};
 	~CDirectX() {};
 
-	void Create(int nShowCmd, WNDPROC WndProc, const char* WindowName, int Width, int Height);
+	void Create(int nShowCmd, WNDPROC WndProc, const char* WindowName);
 
 private:
 	HWND m_hWnd{};
 	HINSTANCE m_hInstance{};
+
+	float m_Width{};
+	float m_Height{};
 };

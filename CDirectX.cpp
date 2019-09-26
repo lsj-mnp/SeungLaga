@@ -1,6 +1,6 @@
 #include "CDirectX.h"
 
-void CDirectX::Create(int nShowCmd, WNDPROC WndProc, const char* WindowName, int Width, int Height)
+void CDirectX::Create(int nShowCmd, WNDPROC WndProc, const char* WindowName)
 {
 	WNDCLASSEX wnd_cls{};
 	wnd_cls.cbClsExtra = 0;
@@ -18,7 +18,7 @@ void CDirectX::Create(int nShowCmd, WNDPROC WndProc, const char* WindowName, int
 	RegisterClassEx(&wnd_cls);
 
 	m_hWnd = CreateWindowEx(0, "Practice", WindowName, WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, CW_USEDEFAULT, Width, Height, nullptr, nullptr, m_hInstance, nullptr);
+		CW_USEDEFAULT, CW_USEDEFAULT, (int)m_Width, (int)m_Height, nullptr, nullptr, m_hInstance, nullptr);
 
 	ShowWindow(m_hWnd, nShowCmd);
 

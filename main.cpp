@@ -4,8 +4,8 @@ LRESULT WINAPI WndProc(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPARAM wParam, _In_ L
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
-	CDirectX DX{ hInstance };
-	DX.Create(nShowCmd, WndProc, "SeungLaga", 900, 500);
+	CDirectX DX{ hInstance, 900, 500 };
+	DX.Create(nShowCmd, WndProc, "SeungLaga");
 
 	MSG Msg{};
 
