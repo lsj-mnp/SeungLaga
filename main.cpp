@@ -9,6 +9,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	MSG Msg{};
 
+	const float color[]{ 0.3f, 0.2f, 0.7f, 1.0f };
+
 	while (true)
 	{
 		if (PeekMessage(&Msg, nullptr, 0, 0, PM_REMOVE))
@@ -24,7 +26,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		else
 		{
-			
+			DX.BeginRendering(color);
+
+			DX.EndRendering();
 		}
 	}
 
