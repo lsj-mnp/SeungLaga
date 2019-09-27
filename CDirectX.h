@@ -1,12 +1,6 @@
 #pragma once
-#include <Windows.h>
-#include <d3d11.h>
-#include <wrl.h>
-#include <cassert>
 
-#pragma comment(lib, "d3d11.lib")
-
-using namespace Microsoft::WRL;
+#include "SharedHeader.h"
 
 class CDirectX
 {
@@ -20,6 +14,11 @@ public:
 	void BeginRendering(const float (&ColorRGBA)[4]);
 	void EndRendering();
 
+public:
+	ID3D11Device* GetDevicePtr() { return m_Device.Get(); }
+
+	ID3D11DeviceContext* GetDeviceContextPtr() { return m_DeviceContext.Get(); }
+
 private:
 	void CreateWin32Window(int nShowCmd, WNDPROC WndProc, const char* WindowName);
 
@@ -29,6 +28,8 @@ private:
 	void CreateSwapChain();
 
 	void CreateAndSetRenderTargetView();
+
+	void SetViewport();
 
 private:
 	HWND m_hWnd{};

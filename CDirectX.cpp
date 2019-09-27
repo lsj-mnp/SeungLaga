@@ -37,6 +37,8 @@ void CDirectX::CreateDirect3DObjects()
 	CreateSwapChain();
 
 	CreateAndSetRenderTargetView();
+
+	SetViewport();
 }
 
 void CDirectX::BeginRendering(const float(&ColorRGBA)[4])
@@ -85,4 +87,17 @@ void CDirectX::CreateAndSetRenderTargetView()
 	assert(SUCCEEDED(m_Device->CreateRenderTargetView(back_buffer.Get(), nullptr, m_RenderTargetView.GetAddressOf())));
 
 	m_DeviceContext->OMSetRenderTargets(1, m_RenderTargetView.GetAddressOf(), nullptr);
+}
+
+void CDirectX::SetViewport()
+{
+	D3D11_VIEWPORT vp{};
+	vp.Width = m_Width;
+	vp.Height = m_Height;
+	vp.TopLeftX = 0;
+	vp.TopLeftY = 0;
+	vp.MinDepth = 0;
+	vp.MaxDepth = 1;
+
+	m_DeviceContext->RSSetViewports(1, &vp);
 }

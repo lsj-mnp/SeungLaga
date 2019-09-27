@@ -1,4 +1,6 @@
 #include "CDirectX.h"
+#include "CShader.h"
+#include "CObject2D.h"
 
 LRESULT WINAPI WndProc(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPARAM wParam, _In_ LPARAM lParam);
 
@@ -6,6 +8,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 {
 	CDirectX DX{ hInstance, 900, 500 };
 	DX.Create(nShowCmd, WndProc, "SeungLaga");
+
+	CShader VS{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
+	CShader PS{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
+	VS.Create(EShaderType::Vertex, L"VertexShader.hlsl", "main");
+	PS.Create(EShaderType::Pixel, L"PixelShader.hlsl", "main");
+
+	CObject2D OB{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
+
+	OB.CreateRectangle(XMFLOAT2(0.5f, 0.5f));
 
 	MSG Msg{};
 
@@ -27,6 +38,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		else
 		{
 			DX.BeginRendering(color);
+
+			VS.Use();
+			PS.Use();
+
+			OB.Draw();
 
 			DX.EndRendering();
 		}
