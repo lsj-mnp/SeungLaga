@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="CDirectX.cpp" />
     <ClCompile Include="CObject2D.cpp" />
+    <ClCompile Include="CShader.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

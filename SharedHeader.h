@@ -1,5 +1,6 @@
 #pragma once
 
+// 필요한 모든 헤더들을 모아놓은 헤더. include는 포함한다는 뜻.
 #include <Windows.h>
 #include <d3d11.h>
 #include <wrl.h>
@@ -9,6 +10,7 @@
 #include <vector>
 #include "DirectXTK/DirectXTK.h"
 
+//필요한 라이브러리를 링크하는데 씀.
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "DirectXTK.lib")
