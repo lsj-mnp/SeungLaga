@@ -18,13 +18,19 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	PS.Create(EShaderType::Pixel, L"PixelShader.hlsl", "main");
 
 	CTexture Tex{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
-	Tex.CreateFromFile(L"Asset/Face.png");
+	Tex.CreateFromFile(L"Asset/pica.png");
+
+	CTexture TexBG{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
+	TexBG.CreateFromFile(L"Asset/bg.png");
 
 	CSamplerState Sam{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
 	Sam.CreateLinear();
 
 	CObject2D OB{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
-	OB.CreateRectangle(XMFLOAT2(1.0f, 1.0f));
+	OB.CreateRectangle(XMFLOAT2(0.4f, 1.0f));
+
+	CObject2D OBBG{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
+	OBBG.CreateRectangle(XMFLOAT2(1.0f, 1.0f));
 
 	//¸Þ¼¼Áö
 	MSG Msg{};
@@ -60,8 +66,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 			Sam.Use();
 
-			Tex.Use();
+			TexBG.Use();
+			OBBG.Draw();
 
+			Tex.Use();
 			OB.Draw();
 
 			DX.EndRendering();

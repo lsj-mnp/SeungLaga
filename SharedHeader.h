@@ -8,6 +8,7 @@
 #include <d3dcompiler.h>
 #include <string>
 #include <vector>
+#include <memory>
 #include "DirectXTK/DirectXTK.h"
 
 //필요한 라이브러리를 링크하는데 씀.
@@ -20,3 +21,5 @@ using namespace Microsoft::WRL;
 using std::string;
 using std::wstring;
 using std::vector;
+using std::unique_ptr;
+using std::make_unique;

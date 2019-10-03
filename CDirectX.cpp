@@ -66,11 +66,15 @@ void CDirectX::CreateDirect3DObjects()
 	CreateAndSetRenderTargetView();
 
 	SetViewport();
+
+	m_CommonStates = make_unique<CommonStates>(m_Device.Get());
 }
 
 void CDirectX::BeginRendering(const float(&ColorRGBA)[4])
 {
 	m_DeviceContext->ClearRenderTargetView(m_RenderTargetView.Get(), ColorRGBA);
+
+	m_DeviceContext->OMSetBlendState(m_CommonStates->NonPremultiplied(), nullptr, 0xFFFFFFFF);
 }
 
 void CDirectX::EndRendering()
