@@ -35,13 +35,13 @@ private:
 private:
 	//윈도우 핸들 저장.
 	HWND m_hWnd{};
-	//실행중인 인스턴스의 정보 저장.
+	//실행중인 인스턴스의 핸들 및 정보 저장.
 	HINSTANCE m_hInstance{};
 
 	float m_Width{};
 	float m_Height{};
 	
-	//ComPtr. Com객체에 사용하는 마이크로소프트가 만든 스마트 포인터.
+	//ComPtr. Com객체에 사용하는, 마이크로소프트가 만든 스마트 포인터.
 
 	//버퍼를 교체하는 역할을 함. DXGI는 잘 바뀌지 않는 내용들이 보관되어있음.
 	ComPtr<IDXGISwapChain> m_SwapChain{};

@@ -27,7 +27,7 @@ void CDirectX::CreateWin32Window(int nShowCmd, WNDPROC WndProc, const char* Wind
 	wnd_cls.hIcon = wnd_cls.hIconSm = LoadIcon(nullptr, IDI_APPLICATION);
 	//윈도우의 인스턴스의 핸들.
 	wnd_cls.hInstance = m_hInstance;
-	//윈도우의 메시지 처리함수의 long pinter(핸들).
+	//윈도우의 메시지 처리함수의 long pointer(핸들).
 	wnd_cls.lpfnWndProc = WndProc;
 	//윈도우의 클래스 이름.
 	wnd_cls.lpszClassName = "Practice";
