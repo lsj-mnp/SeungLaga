@@ -5,10 +5,12 @@
 struct SVertex2D
 {
 	SVertex2D() {}
-	SVertex2D(const XMFLOAT2& _Position, const XMFLOAT4& _Color) : Position{ _Position }, Color{ _Color } {}
+	SVertex2D(const XMFLOAT2& _Position, const XMFLOAT4& _Color, const XMFLOAT2& _TexCoord) :
+		Position{ _Position }, Color{ _Color }, TexCoord{ _TexCoord } {}
 
 	XMFLOAT2 Position{};
 	XMFLOAT4 Color{};
+	XMFLOAT2 TexCoord{};
 };
 
 struct STriangle
@@ -30,6 +32,7 @@ public:
 	}
 	~CObject2D() {}
 
+public:
 	void CreateRectangle(const XMFLOAT2& Size);
 
 	void Draw();

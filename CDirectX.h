@@ -9,6 +9,7 @@ public:
 		m_hInstance{ hInstance }, m_Width{ Width }, m_Height{ Height } {};
 	~CDirectX() {};
 
+public:
 	void Create(int nShowCmd, WNDPROC WndProc, const char* WindowName);
 
 	void BeginRendering(const float (&ColorRGBA)[4]);

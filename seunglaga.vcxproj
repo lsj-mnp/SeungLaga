@@ -125,13 +125,17 @@
   <ItemGroup>
     <ClCompile Include="CDirectX.cpp" />
     <ClCompile Include="CObject2D.cpp" />
+    <ClCompile Include="CSamplerState.cpp" />
     <ClCompile Include="CShader.cpp" />
+    <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDirectX.h" />
     <ClInclude Include="CObject2D.h" />
+    <ClInclude Include="CSamplerState.h" />
     <ClInclude Include="CShader.h" />
+    <ClInclude Include="CTexture.h" />
     <ClInclude Include="DirectXTK\Audio.h" />
     <ClInclude Include="DirectXTK\CommonStates.h" />
     <ClInclude Include="DirectXTK\DDSTextureLoader.h" />

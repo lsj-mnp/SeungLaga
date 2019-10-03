@@ -1,6 +1,8 @@
 #include "CDirectX.h"
 #include "CShader.h"
 #include "CObject2D.h"
+#include "CTexture.h"
+#include "CSamplerState.h"
 
 LRESULT WINAPI WndProc(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPARAM wParam, _In_ LPARAM lParam);
 
@@ -15,8 +17,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	VS.Create(EShaderType::Vertex, L"VertexShader.hlsl", "main");
 	PS.Create(EShaderType::Pixel, L"PixelShader.hlsl", "main");
 
-	CObject2D OB{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
+	CTexture Tex{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
+	Tex.CreateFromFile(L"Asset/Face.png");
 
+	CSamplerState Sam{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
+	Sam.CreateLinear();
+
+	CObject2D OB{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
 	OB.CreateRectangle(XMFLOAT2(1.0f, 1.0f));
 
 	//¸Þ¼¼Áö
@@ -50,6 +57,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 			VS.Use();
 			PS.Use();
+
+			Sam.Use();
+
+			Tex.Use();
 
 			OB.Draw();
 

@@ -5,10 +5,10 @@ void CObject2D::CreateRectangle(const XMFLOAT2& Size)
 	float half_width{ Size.x / 2 };
 	float half_height{ Size.y / 2 };
 
-	m_Vertices.emplace_back(XMFLOAT2(-half_width, +half_height), XMFLOAT4(0.2f, 0.8f, 0.1f, 1.0f));
-	m_Vertices.emplace_back(XMFLOAT2(+half_width, +half_height), XMFLOAT4(0.8f, 0.1f, 0.5f, 1.0f));
-	m_Vertices.emplace_back(XMFLOAT2(-half_width, -half_height), XMFLOAT4(0.2f, 0.1f, 0.9f, 1.0f));
-	m_Vertices.emplace_back(XMFLOAT2(+half_width, -half_height), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+	m_Vertices.emplace_back(XMFLOAT2(-half_width, +half_height), XMFLOAT4(0.2f, 0.8f, 0.1f, 1.0f), XMFLOAT2(0.25f, 0.15f));
+	m_Vertices.emplace_back(XMFLOAT2(+half_width, +half_height), XMFLOAT4(0.8f, 0.1f, 0.5f, 1.0f), XMFLOAT2(0.75f, 0.15f));
+	m_Vertices.emplace_back(XMFLOAT2(-half_width, -half_height), XMFLOAT4(0.2f, 0.1f, 0.9f, 1.0f), XMFLOAT2(0.25f, 0.58f));
+	m_Vertices.emplace_back(XMFLOAT2(+half_width, -half_height), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), XMFLOAT2(0.75f, 0.58f));
 
 	m_Triangles.emplace_back(0, 1, 2);
 	m_Triangles.emplace_back(1, 3, 2);
