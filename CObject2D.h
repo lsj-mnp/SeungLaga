@@ -5,9 +5,10 @@
 struct SVertex2D
 {
 	SVertex2D() {}
-	SVertex2D(const XMFLOAT2& _Position) : Position{ _Position } {}
+	SVertex2D(const XMFLOAT2& _Position, const XMFLOAT4& _Color) : Position{ _Position }, Color{ _Color } {}
 
 	XMFLOAT2 Position{};
+	XMFLOAT4 Color{};
 };
 
 struct STriangle

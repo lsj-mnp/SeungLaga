@@ -17,7 +17,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	CObject2D OB{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
 
-	OB.CreateRectangle(XMFLOAT2(0.5f, 0.5f));
+	OB.CreateRectangle(XMFLOAT2(1.0f, 1.0f));
 
 	//¸Þ¼¼Áö
 	MSG Msg{};

@@ -1,4 +1,9 @@
-float4 main( float4 pos : POSITION ) : SV_POSITION
+#include "Header.hlsli"
+
+VS_OUTPUT main(VS_INPUT input)
 {
-	return pos;
+	VS_OUTPUT output;
+	output.pos = input.pos;
+	output.color = input.color;
+	return output;
 }

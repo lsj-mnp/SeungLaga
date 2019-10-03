@@ -121,5 +121,6 @@
     <None Include="DirectXTK\SimpleMath.inl">
       <Filter>DirectXTK</Filter>
     </None>
+    <None Include="Header.hlsli" />
   </ItemGroup>
 </Project>
