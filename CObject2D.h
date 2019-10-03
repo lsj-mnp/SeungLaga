@@ -10,6 +10,14 @@ struct SVertex2D
 	XMFLOAT2 Position{};
 };
 
+struct STriangle
+{
+	STriangle() {}
+	STriangle(uint32_t _0, uint32_t _1, uint32_t _2) : Index{ _0, _1, _2 } {}
+
+	uint32_t Index[3]{};
+};
+
 class CObject2D
 {
 public:
@@ -29,9 +37,12 @@ private:
 	ID3D11Device* m_PtrDevice{};
 	ID3D11DeviceContext* m_PtrDeviceContext{};
 
+private:
 	ComPtr<ID3D11Buffer> m_VertexBuffer{};
+	ComPtr<ID3D11Buffer> m_IndexBuffer{};
 
 	vector<SVertex2D> m_Vertices{};
+	vector<STriangle> m_Triangles{};
 
 	UINT m_VStride{ (UINT)sizeof(SVertex2D) };
 	UINT m_VOffset{};
