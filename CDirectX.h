@@ -52,6 +52,6 @@ private:
 	ComPtr<ID3D11DeviceContext> m_DeviceContext{};
 	//애니메이션을 어디에 그릴지 정하는 역할을 함.
 	ComPtr<ID3D11RenderTargetView> m_RenderTargetView{};
-
+	//기본적인 State들을 가지고 있음.
 	unique_ptr<CommonStates> m_CommonStates{};
 };

@@ -8,6 +8,7 @@ enum class EShaderType
 	Pixel
 };
 
+//GPU에 들어가는 정점이 어떤 내용으로 이루어져있는지 알려줌. 배열임.
 constexpr D3D11_INPUT_ELEMENT_DESC KInputLayout[]
 {
 	{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT		, 0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 }, 

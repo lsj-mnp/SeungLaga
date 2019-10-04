@@ -8,6 +8,7 @@
 #include <d3dcompiler.h>
 #include <string>
 #include <vector>
+//unique를 쓰는 데 필요한 헤더.
 #include <memory>
 #include "DirectXTK/DirectXTK.h"
 

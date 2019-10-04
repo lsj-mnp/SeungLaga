@@ -13,11 +13,13 @@ struct SVertex2D
 	XMFLOAT2 TexCoord{};
 };
 
+//하나의 삼각형의 각 정점을 저장함.
 struct STriangle
 {
 	STriangle() {}
 	STriangle(uint32_t _0, uint32_t _1, uint32_t _2) : Index{ _0, _1, _2 } {}
 
+	//int는 국제 표준이 없어서 언어에 맞게 알아서 바꿔주는 자료형을 씀.
 	uint32_t Index[3]{};
 };
 
@@ -49,5 +51,6 @@ private:
 	vector<STriangle> m_Triangles{};
 
 	UINT m_VStride{ (UINT)sizeof(SVertex2D) };
+	//Offset. 몇 번째부터 시작할지. 
 	UINT m_VOffset{};
 };
