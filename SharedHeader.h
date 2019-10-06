@@ -24,3 +24,9 @@ using std::wstring;
 using std::vector;
 using std::unique_ptr;
 using std::make_unique;
+
+enum class EShaderType
+{
+	Vertex,
+	Pixel
+};

@@ -131,6 +131,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CConstantBuffer.h" />
     <ClInclude Include="CDirectX.h" />
     <ClInclude Include="CObject2D.h" />
     <ClInclude Include="CSamplerState.h" />

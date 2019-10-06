@@ -1,6 +1,12 @@
 #pragma once
 
 #include "SharedHeader.h"
+#include "CConstantBuffer.h"
+
+struct ScbMatrixData
+{
+	XMMATRIX Projection{};
+};
 
 class CDirectX
 {
@@ -42,6 +48,7 @@ private:
 	float m_Width{};
 	float m_Height{};
 	
+private:
 	//ComPtr. Com객체에 사용하는, 마이크로소프트가 만든 스마트 포인터.
 
 	//버퍼를 교체하는 역할을 함. DXGI는 잘 바뀌지 않는 내용들이 보관되어있음.
@@ -54,4 +61,8 @@ private:
 	ComPtr<ID3D11RenderTargetView> m_RenderTargetView{};
 	//기본적인 State들을 가지고 있음.
 	unique_ptr<CommonStates> m_CommonStates{};
+	
+private:
+	ScbMatrixData m_cbMatrixData{};
+	unique_ptr<CConstantBuffer> m_cbMatrix{};
 };

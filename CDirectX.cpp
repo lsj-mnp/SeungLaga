@@ -6,6 +6,12 @@ void CDirectX::Create(int nShowCmd, WNDPROC WndProc, const char* WindowName)
 	CreateWin32Window(nShowCmd, WndProc, WindowName);
 
 	CreateDirect3DObjects();
+
+	m_cbMatrixData.Projection = XMMatrixTranspose(XMMatrixOrthographicLH(m_Width, m_Height, 0, 1));
+	m_cbMatrix = make_unique<CConstantBuffer>(m_Device.Get(), m_DeviceContext.Get());
+	m_cbMatrix->Create(EShaderType::Vertex, sizeof(ScbMatrixData));
+	m_cbMatrix->Update(&m_cbMatrixData);
+	m_cbMatrix->Use();
 }
 
 //윈도우 생성.

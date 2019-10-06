@@ -2,12 +2,6 @@
 
 #include "SharedHeader.h"
 
-enum class EShaderType
-{
-	Vertex,
-	Pixel
-};
-
 //GPU에 들어가는 정점이 어떤 내용으로 이루어져있는지 알려줌. 배열임.
 constexpr D3D11_INPUT_ELEMENT_DESC KInputLayout[]
 {

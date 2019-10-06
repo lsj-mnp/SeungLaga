@@ -9,7 +9,7 @@ LRESULT WINAPI WndProc(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPARAM wParam, _In_ L
 //winbase.h에서 양식을 가져옴.
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
-	CDirectX DX{ hInstance, 900, 500 };
+	CDirectX DX{ hInstance, 1280, 720 };
 	DX.Create(nShowCmd, WndProc, "SeungLaga");
 
 	CShader VS{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
@@ -18,7 +18,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	PS.Create(EShaderType::Pixel, L"PixelShader.hlsl", "main");
 
 	CTexture Tex{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
-	Tex.CreateFromFile(L"Asset/pica.png");
+	Tex.CreateFromFile(L"Asset/test.png");
 
 	CTexture TexBG{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
 	TexBG.CreateFromFile(L"Asset/bg.png");
@@ -27,10 +27,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Sam.CreateLinear();
 
 	CObject2D OB{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
-	OB.CreateRectangle(XMFLOAT2(0.4f, 1.0f));
+	OB.CreateRectangle(XMFLOAT2(205.0f, 126.0f));
 
 	CObject2D OBBG{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
-	OBBG.CreateRectangle(XMFLOAT2(1.0f, 1.0f));
+	OBBG.CreateRectangle(XMFLOAT2(800.0f, 600.0f));
 
 	//메세지
 	MSG Msg{};
