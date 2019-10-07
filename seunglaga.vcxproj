@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CConstantBuffer.cpp" />
     <ClCompile Include="CDirectX.cpp" />
     <ClCompile Include="CObject2D.cpp" />
     <ClCompile Include="CSamplerState.cpp" />
