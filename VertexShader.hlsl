@@ -14,9 +14,9 @@ VS_OUTPUT main(VS_INPUT input)
 {
 	VS_OUTPUT output;
 	
-	//output.pos = input.pos;
-	output.pos = mul(input.pos, Projection);
-	output.pos = mul(output.pos, World);
+	output.pos = mul(input.pos, World);
+	output.pos = mul(output.pos, Projection);
+	
 
 	output.color = input.color;
 	output.texcoord = input.texcoord;

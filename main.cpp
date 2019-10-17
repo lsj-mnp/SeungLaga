@@ -5,7 +5,8 @@ LRESULT WINAPI WndProc(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPARAM wParam, _In_ L
 //winbase.h에서 양식을 가져옴.
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
-	CGame Game{ hInstance, 1280, 720 };
+	constexpr XMFLOAT2 KWindowSize{ 1280, 720 };
+	CGame Game{ hInstance, KWindowSize.x, KWindowSize.y };
 	Game.Create(nShowCmd, WndProc, "SeungLaga");
 	
 	CTexture* texMainShip{ Game.AddTexture(L"Asset/flight.png") };
@@ -53,43 +54,45 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		{
 			const Keyboard::State& KeyState{ Game.GetKeyboardState() };
 
+			static constexpr float KDeltaMovement{ 0.5f };
+
 			if (KeyState.Up)
 			{
-				goMainShip->Translate(XMVectorSet(0.0f, +0.001f, 0.0f, 0.0f));
+				goMainShip->Translate(XMVectorSet(0.0f, +KDeltaMovement, 0.0f, 0.0f));
 
-				if (XMVectorGetY(goMainShip->GetTranslation()) >= 1.1f)
+				if (XMVectorGetY(goMainShip->GetTranslation()) >= KWindowSize.y / 2)
 				{
-					goMainShip->SetTranslationY(-1.1f);
+					goMainShip->SetTranslationY(-KWindowSize.y / 2);
 				}
 			}
 			
 			if (KeyState.Down)
 			{
-				goMainShip->Translate(XMVectorSet(0.0f, -0.001f, 0.0f, 0.0f));
+				goMainShip->Translate(XMVectorSet(0.0f, -KDeltaMovement, 0.0f, 0.0f));
 
-				if (XMVectorGetY(goMainShip->GetTranslation()) <= -1.1f)
+				if (XMVectorGetY(goMainShip->GetTranslation()) <= -KWindowSize.y / 2)
 				{
-					goMainShip->SetTranslationY(1.1f);
+					goMainShip->SetTranslationY(KWindowSize.y / 2);
 				}
 			}
 
 			if (KeyState.Left)
 			{
-				goMainShip->Translate(XMVectorSet(-0.001f, 0.0f, 0.0f, 0.0f));
+				goMainShip->Translate(XMVectorSet(-KDeltaMovement, 0.0f, 0.0f, 0.0f));
 
-				if (XMVectorGetX(goMainShip->GetTranslation()) <= -1.1f)
+				if (XMVectorGetX(goMainShip->GetTranslation()) <= -KWindowSize.x / 2)
 				{
-					goMainShip->SetTranslationX(1.1f);
+					goMainShip->SetTranslationX(KWindowSize.x / 2);
 				}
 			}
 
 			if (KeyState.Right)
 			{
-				goMainShip->Translate(XMVectorSet(+0.001f, 0.0f, 0.0f, 0.0f));
+				goMainShip->Translate(XMVectorSet(+KDeltaMovement, 0.0f, 0.0f, 0.0f));
 
-				if (XMVectorGetX(goMainShip->GetTranslation()) >= 1.1f)
+				if (XMVectorGetX(goMainShip->GetTranslation()) >= KWindowSize.x / 2)
 				{
-					goMainShip->SetTranslationX(-1.1f);
+					goMainShip->SetTranslationX(-KWindowSize.x / 2);
 				}
 			}
 
