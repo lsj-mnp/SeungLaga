@@ -9,6 +9,20 @@ void CGameObject2D::SetTranslation(const XMVECTOR& Translation)
 	UpdateWorldMatrix();
 }
 
+void CGameObject2D::SetTranslationY(float Y)
+{
+	m_ComponentTransform.Translation = XMVectorSetY(m_ComponentTransform.Translation, Y);
+
+	UpdateWorldMatrix();
+}
+
+void CGameObject2D::SetTranslationX(float X)
+{
+	m_ComponentTransform.Translation = XMVectorSetX(m_ComponentTransform.Translation, X);
+
+	UpdateWorldMatrix();
+}
+
 void CGameObject2D::SetRotation(const XMVECTOR& Rotation)
 {
 	m_ComponentTransform.Rotation = Rotation;
@@ -62,6 +76,11 @@ ESampler CGameObject2D::GetSampler() const
 const XMMATRIX& CGameObject2D::GetWorldMatrix() const
 {
 	return m_ComponentTransform.WorldMatrix;
+}
+
+const XMVECTOR& CGameObject2D::GetTranslation() const
+{
+	return m_ComponentTransform.Translation;
 }
 
 void CGameObject2D::UpdateWorldMatrix()

@@ -45,6 +45,10 @@ public:
 public:
 	void SetTranslation(const XMVECTOR& Translation);
 
+	void SetTranslationY(float Y);
+
+	void SetTranslationX(float X);
+
 	void SetRotation(const XMVECTOR& Rotation);
 
 	void SetScaling(const XMVECTOR& Scaling);
@@ -63,6 +67,9 @@ public:
 	ESampler GetSampler() const;
 
 	const XMMATRIX& GetWorldMatrix() const;
+
+public:
+	const XMVECTOR& GetTranslation() const;
 
 private:
 	void UpdateWorldMatrix();

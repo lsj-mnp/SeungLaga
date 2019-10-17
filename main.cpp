@@ -8,7 +8,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	CGame Game{ hInstance, 1280, 720 };
 	Game.Create(nShowCmd, WndProc, "SeungLaga");
 	
-	CTexture* texMainShip{ Game.AddTexture(L"Asset/asdf.png") };
+	CTexture* texMainShip{ Game.AddTexture(L"Asset/flight.png") };
 	CTexture* texBG{ Game.AddTexture(L"Asset/bg.png") };
 
 	CObject2D* objMainShip{ Game.AddObject2D(XMFLOAT2(205.0f, 126.0f)) };
@@ -56,21 +56,41 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			if (KeyState.Up)
 			{
 				goMainShip->Translate(XMVectorSet(0.0f, +0.001f, 0.0f, 0.0f));
+
+				if (XMVectorGetY(goMainShip->GetTranslation()) >= 1.1f)
+				{
+					goMainShip->SetTranslationY(-1.1f);
+				}
 			}
 			
 			if (KeyState.Down)
 			{
 				goMainShip->Translate(XMVectorSet(0.0f, -0.001f, 0.0f, 0.0f));
+
+				if (XMVectorGetY(goMainShip->GetTranslation()) <= -1.1f)
+				{
+					goMainShip->SetTranslationY(1.1f);
+				}
 			}
 
 			if (KeyState.Left)
 			{
 				goMainShip->Translate(XMVectorSet(-0.001f, 0.0f, 0.0f, 0.0f));
+
+				if (XMVectorGetX(goMainShip->GetTranslation()) <= -1.1f)
+				{
+					goMainShip->SetTranslationX(1.1f);
+				}
 			}
 
 			if (KeyState.Right)
 			{
 				goMainShip->Translate(XMVectorSet(+0.001f, 0.0f, 0.0f, 0.0f));
+
+				if (XMVectorGetX(goMainShip->GetTranslation()) >= 1.1f)
+				{
+					goMainShip->SetTranslationX(-1.1f);
+				}
 			}
 
 			if (KeyState.Escape)
