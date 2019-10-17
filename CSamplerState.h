@@ -15,9 +15,7 @@ public:
 
 public:
 	void Create(const D3D11_SAMPLER_DESC& SamplerDesc);
-	void CreateLinear();
-	void CreatePoint();
-
+	
 	void Use();
 
 private:

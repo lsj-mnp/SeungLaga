@@ -124,7 +124,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CConstantBuffer.cpp" />
-    <ClCompile Include="CDirectX.cpp" />
+    <ClCompile Include="CGame.cpp" />
+    <ClCompile Include="CGameObject2D.cpp" />
     <ClCompile Include="CObject2D.cpp" />
     <ClCompile Include="CSamplerState.cpp" />
     <ClCompile Include="CShader.cpp" />
@@ -133,7 +134,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CConstantBuffer.h" />
-    <ClInclude Include="CDirectX.h" />
+    <ClInclude Include="CGame.h" />
+    <ClInclude Include="CGameObject2D.h" />
     <ClInclude Include="CObject2D.h" />
     <ClInclude Include="CSamplerState.h" />
     <ClInclude Include="CShader.h" />

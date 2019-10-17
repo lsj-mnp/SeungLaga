@@ -1,36 +1,28 @@
-#include "CDirectX.h"
-#include "CShader.h"
-#include "CObject2D.h"
-#include "CTexture.h"
-#include "CSamplerState.h"
+#include "CGame.h"
 
 LRESULT WINAPI WndProc(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPARAM wParam, _In_ LPARAM lParam);
 
 //winbase.h에서 양식을 가져옴.
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
-	CDirectX DX{ hInstance, 1280, 720 };
-	DX.Create(nShowCmd, WndProc, "SeungLaga");
+	CGame Game{ hInstance, 1280, 720 };
+	Game.Create(nShowCmd, WndProc, "SeungLaga");
+	
+	CTexture* texMainShip{ Game.AddTexture(L"Asset/asdf.png") };
+	CTexture* texBG{ Game.AddTexture(L"Asset/bg.png") };
 
-	CShader VS{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
-	CShader PS{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
-	VS.Create(EShaderType::Vertex, L"VertexShader.hlsl", "main");
-	PS.Create(EShaderType::Pixel, L"PixelShader.hlsl", "main");
+	CObject2D* objMainShip{ Game.AddObject2D(XMFLOAT2(205.0f, 126.0f)) };
+	CObject2D* objBG{ Game.AddObject2D(XMFLOAT2(800.0f, 600.0f)) };
 
-	CTexture Tex{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
-	Tex.CreateFromFile(L"Asset/test.png");
+	CGameObject2D* goBG{ Game.AddGameObject2D() };
+	goBG->SetSampler(ESampler::LinearWrap);
+	goBG->SetObject2D(objBG);
+	goBG->SetTexture(texBG);
 
-	CTexture TexBG{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
-	TexBG.CreateFromFile(L"Asset/bg.png");
-
-	CSamplerState Sam{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
-	Sam.CreateLinear();
-
-	CObject2D OB{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
-	OB.CreateRectangle(XMFLOAT2(205.0f, 126.0f));
-
-	CObject2D OBBG{ DX.GetDevicePtr(), DX.GetDeviceContextPtr() };
-	OBBG.CreateRectangle(XMFLOAT2(800.0f, 600.0f));
+	CGameObject2D* goMainShip{ Game.AddGameObject2D() };
+	goMainShip->SetSampler(ESampler::LinearWrap);
+	goMainShip->SetObject2D(objMainShip);
+	goMainShip->SetTexture(texMainShip);	
 
 	//메세지
 	MSG Msg{};
@@ -59,20 +51,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		else
 		{
-			DX.BeginRendering(color);
+			Game.BeginRendering(color);
 
-			VS.Use();
-			PS.Use();
+			Game.Draw();
 
-			Sam.Use();
-
-			TexBG.Use();
-			OBBG.Draw();
-
-			Tex.Use();
-			OB.Draw();
-
-			DX.EndRendering();
+			Game.EndRendering();
 		}
 	}
 

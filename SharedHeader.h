@@ -27,6 +27,6 @@ using std::make_unique;
 
 enum class EShaderType
 {
-	Vertex,
-	Pixel
+	VertexShader,
+	PixelShader
 };

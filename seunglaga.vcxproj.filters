@@ -21,9 +21,6 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CDirectX.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CObject2D.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -39,11 +36,14 @@
     <ClCompile Include="CConstantBuffer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="CGame.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameObject2D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CDirectX.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="CShader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -123,6 +123,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="CConstantBuffer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameObject2D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CGame.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

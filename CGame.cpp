@@ -1,7 +1,7 @@
-#include "CDirectX.h"
+#include "CGame.h"
 
 //윈도우와 Direct3DObjects를 생성하는 역할을 함.
-void CDirectX::Create(int nShowCmd, WNDPROC WndProc, const char* WindowName)
+void CGame::Create(int nShowCmd, WNDPROC WndProc, const char* WindowName)
 {
 	CreateWin32Window(nShowCmd, WndProc, WindowName);
 
@@ -9,13 +9,23 @@ void CDirectX::Create(int nShowCmd, WNDPROC WndProc, const char* WindowName)
 
 	m_cbMatrixData.Projection = XMMatrixTranspose(XMMatrixOrthographicLH(m_Width, m_Height, 0, 1));
 	m_cbMatrix = make_unique<CConstantBuffer>(m_Device.Get(), m_DeviceContext.Get());
-	m_cbMatrix->Create(EShaderType::Vertex, sizeof(ScbMatrixData));
+	m_cbMatrix->Create(EShaderType::VertexShader, sizeof(ScbMatrixData));
 	m_cbMatrix->Update(&m_cbMatrixData);
 	m_cbMatrix->Use();
 }
 
+Keyboard::State CGame::GetKeyboardState()
+{
+	return m_Keyboard.GetState();
+}
+
+Mouse::State CGame::GetMouseState()
+{
+	return m_Mouse.GetState();
+}
+
 //윈도우 생성.
-void CDirectX::CreateWin32Window(int nShowCmd, WNDPROC WndProc, const char* WindowName)
+void CGame::CreateWin32Window(int nShowCmd, WNDPROC WndProc, const char* WindowName)
 {
 	//윈도우 클래스를 설정하는 구조체.
 	WNDCLASSEX wnd_cls{};
@@ -65,7 +75,7 @@ void CDirectX::CreateWin32Window(int nShowCmd, WNDPROC WndProc, const char* Wind
 	UpdateWindow(m_hWnd);
 }
 
-void CDirectX::CreateDirect3DObjects()
+void CGame::CreateDirect3DObjects()
 {
 	CreateSwapChain();
 
@@ -73,22 +83,109 @@ void CDirectX::CreateDirect3DObjects()
 
 	SetViewport();
 
+	CreateBaseShaders();
+
 	m_CommonStates = make_unique<CommonStates>(m_Device.Get());
+
+	m_Mouse.SetWindow(m_hWnd);
+	m_Mouse.SetMode(Mouse::MODE_ABSOLUTE);
 }
 
-void CDirectX::BeginRendering(const float(&ColorRGBA)[4])
+void CGame::BeginRendering(const float(&ColorRGBA)[4])
 {
 	m_DeviceContext->ClearRenderTargetView(m_RenderTargetView.Get(), ColorRGBA);
 
 	m_DeviceContext->OMSetBlendState(m_CommonStates->NonPremultiplied(), nullptr, 0xFFFFFFFF);
 }
 
-void CDirectX::EndRendering()
+void CGame::Draw()
+{
+	ID3D11SamplerState* PtrSamplerLinearWrap{ m_CommonStates->LinearWrap() };
+	ID3D11SamplerState* PtrSamplerPointWrap{ m_CommonStates->PointWrap() };
+
+	m_vShaders[0]->Use();
+	m_vShaders[1]->Use();
+
+	for (auto& GameObject2D : m_vGameObject2Ds)
+	{
+		switch (GameObject2D->GetSampler())
+		{
+		case ESampler::LinearWrap:
+			m_DeviceContext->PSSetSamplers(0, 1, &PtrSamplerLinearWrap);
+			break;
+		case ESampler::PointWrap:
+			m_DeviceContext->PSSetSamplers(0, 1, &PtrSamplerPointWrap);
+			break;
+		default:
+			break;
+		}
+
+		GameObject2D->Draw();
+	}
+}
+
+void CGame::EndRendering()
 {
 	m_SwapChain->Present(0, 0);
 }
 
-void CDirectX::CreateSwapChain()
+CGameObject2D* CGame::AddGameObject2D()
+{
+	m_vGameObject2Ds.emplace_back(make_unique<CGameObject2D>());
+	return m_vGameObject2Ds.back().get();
+}
+
+CGameObject2D* CGame::GetGameObject2D(size_t Index)
+{
+	if (Index >= m_vGameObject2Ds.size()) { return nullptr; }
+
+	return m_vGameObject2Ds[Index].get();
+}
+
+CShader* CGame::AddShader(EShaderType ShaderType, const wstring& ShaderFileName, const string& EntryPoint)
+{
+	m_vShaders.emplace_back(make_unique<CShader>(m_Device.Get(), m_DeviceContext.Get()));
+	m_vShaders.back()->Create(ShaderType, ShaderFileName, EntryPoint);
+
+	return m_vShaders.back().get();
+}
+
+CShader* CGame::GetShader(size_t Index)
+{
+	if (Index >= m_vShaders.size()) { return nullptr; }
+
+	return m_vShaders[Index].get();
+}
+
+CTexture* CGame::AddTexture(const wstring& FileName)
+{
+	m_vTextures.emplace_back(make_unique<CTexture>(m_Device.Get(), m_DeviceContext.Get()));
+	m_vTextures.back()->CreateFromFile(FileName);
+	return m_vTextures.back().get();
+}
+
+CTexture* CGame::GetTexture(size_t Index)
+{
+	if (Index >= m_vTextures.size()) { return nullptr; }
+
+	return m_vTextures[Index].get();
+}
+
+CObject2D* CGame::AddObject2D(const XMFLOAT2& RectangleSize)
+{
+	m_vObject2Ds.emplace_back(make_unique<CObject2D>(m_Device.Get(), m_DeviceContext.Get()));
+	m_vObject2Ds.back()->CreateRectangle(RectangleSize);
+	return m_vObject2Ds.back().get();
+}
+
+CObject2D* CGame::GetObject2D(size_t Index)
+{
+	if (Index >= m_vObject2Ds.size()) { return nullptr; }
+
+	return m_vObject2Ds[Index].get();
+}
+
+void CGame::CreateSwapChain()
 {
 	assert(!m_SwapChain);
 
@@ -142,7 +239,7 @@ void CDirectX::CreateSwapChain()
 		m_SwapChain.GetAddressOf(), m_Device.GetAddressOf(), nullptr, m_DeviceContext.GetAddressOf())));
 }
 
-void CDirectX::CreateAndSetRenderTargetView()
+void CGame::CreateAndSetRenderTargetView()
 {
 	assert(!m_RenderTargetView);
 
@@ -157,7 +254,8 @@ void CDirectX::CreateAndSetRenderTargetView()
 	m_DeviceContext->OMSetRenderTargets(1, m_RenderTargetView.GetAddressOf(), nullptr);
 }
 
-void CDirectX::SetViewport()
+//어디부터 어디까지 볼지 정하는 함수. 화면에 셰이더 띄우려면 필수임.
+void CGame::SetViewport()
 {
 	//뷰포트 설정. 높이, 너비, 왼쪽 위 X좌표, 왼쪽 위 Y좌표, 깊이값 최소, 최대를 설정함.
 	D3D11_VIEWPORT vp{};
@@ -170,4 +268,10 @@ void CDirectX::SetViewport()
 
 	//파이프라인의 Rasterizer stager에 뷰포트를 설정함. 설정할 뷰포트의 갯수, 뷰포트를 설정한 구조체의 포인터를 넣음.
 	m_DeviceContext->RSSetViewports(1, &vp);
+}
+
+void CGame::CreateBaseShaders()
+{
+	AddShader(EShaderType::VertexShader, L"VertexShader.hlsl", "main");
+	AddShader(EShaderType::PixelShader, L"PixelShader.hlsl", "main");
 }

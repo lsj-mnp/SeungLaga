@@ -30,6 +30,7 @@ private:
 	ID3D11Device* m_PtrDevice{};
 	ID3D11DeviceContext* m_PtrDeviceContext{};
 
+private:
 	EShaderType m_ShaderType{};
 
 	ComPtr<ID3DBlob> m_Blob{};

@@ -28,10 +28,10 @@ void CConstantBuffer::Use()
 {
 	switch (m_eShaderType)
 	{
-	case EShaderType::Vertex:
+	case EShaderType::VertexShader:
 		m_PtrDeviceContext->VSSetConstantBuffers(0, 1, m_ConstantBuffer.GetAddressOf());
 		break;
-	case EShaderType::Pixel:
+	case EShaderType::PixelShader:
 		m_PtrDeviceContext->PSSetConstantBuffers(0, 1, m_ConstantBuffer.GetAddressOf());
 		break;
 	default:
