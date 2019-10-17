@@ -7,11 +7,14 @@ void CGame::Create(int nShowCmd, WNDPROC WndProc, const char* WindowName)
 
 	CreateDirect3DObjects();
 
-	m_cbMatrixData.Projection = XMMatrixTranspose(XMMatrixOrthographicLH(m_Width, m_Height, 0, 1));
-	m_cbMatrix = make_unique<CConstantBuffer>(m_Device.Get(), m_DeviceContext.Get());
-	m_cbMatrix->Create(EShaderType::VertexShader, sizeof(ScbMatrixData));
-	m_cbMatrix->Update(&m_cbMatrixData);
-	m_cbMatrix->Use();
+	m_cbProjectionData.Projection = XMMatrixTranspose(XMMatrixOrthographicLH(m_Width, m_Height, 0, 1));
+
+	m_cbProjection = make_unique<CConstantBuffer>(m_Device.Get(), m_DeviceContext.Get());
+	m_cbProjection->Create(EShaderType::VertexShader, sizeof(ScbProjectionData), 0);
+	m_cbProjection->Update(&m_cbProjectionData);
+
+	m_cbWorld = make_unique<CConstantBuffer>(m_Device.Get(), m_DeviceContext.Get());
+	m_cbWorld->Create(EShaderType::VertexShader, sizeof(ScbWorldData), 1);
 }
 
 Keyboard::State CGame::GetKeyboardState()
@@ -22,6 +25,11 @@ Keyboard::State CGame::GetKeyboardState()
 Mouse::State CGame::GetMouseState()
 {
 	return m_Mouse.GetState();
+}
+
+HWND CGame::GethWnd()
+{
+	return m_hWnd;
 }
 
 //윈도우 생성.
@@ -106,6 +114,8 @@ void CGame::Draw()
 	m_vShaders[0]->Use();
 	m_vShaders[1]->Use();
 
+	m_cbProjection->Use();
+
 	for (auto& GameObject2D : m_vGameObject2Ds)
 	{
 		switch (GameObject2D->GetSampler())
@@ -119,6 +129,10 @@ void CGame::Draw()
 		default:
 			break;
 		}
+
+		m_cbWorldData.World = XMMatrixTranspose(GameObject2D->GetWorldMatrix());
+		m_cbWorld->Update(&m_cbWorldData);
+		m_cbWorld->Use();
 
 		GameObject2D->Draw();
 	}

@@ -1,7 +1,9 @@
 #include "CConstantBuffer.h"
 
-void CConstantBuffer::Create(EShaderType ShaderType, size_t ByteWidth)
+void CConstantBuffer::Create(EShaderType ShaderType, size_t ByteWidth, UINT Slot)
 {
+	m_Slot = Slot;
+
 	D3D11_BUFFER_DESC buffer_desc{};
 	buffer_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	buffer_desc.ByteWidth = m_ByteWidth = ByteWidth;
@@ -13,7 +15,7 @@ void CConstantBuffer::Create(EShaderType ShaderType, size_t ByteWidth)
 	m_PtrDevice->CreateBuffer(&buffer_desc, nullptr, m_ConstantBuffer.GetAddressOf());
 }
 
-void CConstantBuffer::Update(void* PtrData)
+void CConstantBuffer::Update(const void* PtrData)
 {
 	D3D11_MAPPED_SUBRESOURCE mapped{};
 	if (SUCCEEDED(m_PtrDeviceContext->Map(m_ConstantBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped)))
@@ -29,10 +31,10 @@ void CConstantBuffer::Use()
 	switch (m_eShaderType)
 	{
 	case EShaderType::VertexShader:
-		m_PtrDeviceContext->VSSetConstantBuffers(0, 1, m_ConstantBuffer.GetAddressOf());
+		m_PtrDeviceContext->VSSetConstantBuffers(m_Slot, 1, m_ConstantBuffer.GetAddressOf());
 		break;
 	case EShaderType::PixelShader:
-		m_PtrDeviceContext->PSSetConstantBuffers(0, 1, m_ConstantBuffer.GetAddressOf());
+		m_PtrDeviceContext->PSSetConstantBuffers(m_Slot, 1, m_ConstantBuffer.GetAddressOf());
 		break;
 	default:
 		break;

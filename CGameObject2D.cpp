@@ -23,6 +23,13 @@ void CGameObject2D::SetScaling(const XMVECTOR& Scaling)
 	UpdateWorldMatrix();
 }
 
+void CGameObject2D::Translate(const XMVECTOR& Delta)
+{
+	m_ComponentTransform.Translation += Delta;
+
+	UpdateWorldMatrix();
+}
+
 void CGameObject2D::SetObject2D(CObject2D* Object2D)
 {
 	m_ComponentRender.PtrObject2D = Object2D;
@@ -50,6 +57,11 @@ void CGameObject2D::Draw()
 ESampler CGameObject2D::GetSampler() const
 {
 	return m_eSampler;
+}
+
+const XMMATRIX& CGameObject2D::GetWorldMatrix() const
+{
+	return m_ComponentTransform.WorldMatrix;
 }
 
 void CGameObject2D::UpdateWorldMatrix()

@@ -8,9 +8,14 @@
 #include "CTexture.h"
 #include "CSamplerState.h"
 
-struct ScbMatrixData
+struct ScbProjectionData
 {
 	XMMATRIX Projection{};
+};
+
+struct ScbWorldData
+{
+	XMMATRIX World{};
 };
 
 class CGame
@@ -54,6 +59,8 @@ public:
 
 	Mouse::State GetMouseState();
 
+	HWND GethWnd();
+
 private:
 	void CreateWin32Window(int nShowCmd, WNDPROC WndProc, const char* WindowName);
 
@@ -95,8 +102,11 @@ private:
 	Mouse m_Mouse{};
 	
 private:
-	ScbMatrixData m_cbMatrixData{};
-	unique_ptr<CConstantBuffer> m_cbMatrix{};
+	ScbProjectionData m_cbProjectionData{};
+	ScbWorldData m_cbWorldData{};
+
+	unique_ptr<CConstantBuffer> m_cbProjection{};
+	unique_ptr<CConstantBuffer> m_cbWorld{};
 
 private:
 	vector<unique_ptr<CGameObject2D>> m_vGameObject2Ds{};

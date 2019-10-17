@@ -14,9 +14,9 @@ public:
 	~CConstantBuffer() {}
 
 public:
-	void Create(EShaderType ShaderType, size_t ByteWidth);
+	void Create(EShaderType ShaderType, size_t ByteWidth, UINT Slot);
 
-	void Update(void* PtrData);
+	void Update(const void* PtrData);
 
 	void Use();
 	
@@ -27,6 +27,7 @@ private:
 private:
 	ComPtr<ID3D11Buffer> m_ConstantBuffer{};
 	size_t m_ByteWidth{};
+	UINT m_Slot{};
 
 	EShaderType m_eShaderType{};
 };

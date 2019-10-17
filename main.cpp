@@ -51,6 +51,35 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		}
 		else
 		{
+			const Keyboard::State& KeyState{ Game.GetKeyboardState() };
+
+			if (KeyState.Up)
+			{
+				goMainShip->Translate(XMVectorSet(0.0f, +0.001f, 0.0f, 0.0f));
+			}
+			
+			if (KeyState.Down)
+			{
+				goMainShip->Translate(XMVectorSet(0.0f, -0.001f, 0.0f, 0.0f));
+			}
+
+			if (KeyState.Left)
+			{
+				goMainShip->Translate(XMVectorSet(-0.001f, 0.0f, 0.0f, 0.0f));
+			}
+
+			if (KeyState.Right)
+			{
+				goMainShip->Translate(XMVectorSet(+0.001f, 0.0f, 0.0f, 0.0f));
+			}
+
+			if (KeyState.Escape)
+			{
+				DestroyWindow(Game.GethWnd());
+
+				continue;
+			}
+
 			Game.BeginRendering(color);
 
 			Game.Draw();
@@ -67,6 +96,27 @@ LRESULT WINAPI WndProc(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPARAM wParam, _In_ L
 {
 	switch (Msg)
 	{
+	case WM_INPUT:
+	case WM_MOUSEMOVE:
+	case WM_LBUTTONDOWN:
+	case WM_LBUTTONUP:
+	case WM_RBUTTONDOWN:
+	case WM_RBUTTONUP:
+	case WM_MBUTTONDOWN:
+	case WM_MBUTTONUP:
+	case WM_MOUSEWHEEL:
+	case WM_XBUTTONDOWN:
+	case WM_XBUTTONUP:
+	case WM_MOUSEHOVER:
+		Mouse::ProcessMessage(Msg, wParam, lParam);
+		break;
+	case WM_ACTIVATEAPP:
+	case WM_KEYDOWN:
+	case WM_SYSKEYDOWN:
+	case WM_KEYUP:
+	case WM_SYSKEYUP:
+		Keyboard::ProcessMessage(Msg, wParam, lParam);
+		break;
 		//종료 명령어를 받았을 경우.
 	case WM_DESTROY:
 		//WM_QUIT 메시지를 전달함.
@@ -74,14 +124,6 @@ LRESULT WINAPI WndProc(_In_ HWND hWnd, _In_ UINT Msg, _In_ WPARAM wParam, _In_ L
 
 		return 0;
 		//키보드를 눌렀을 경우.
-	case WM_KEYDOWN:
-		//VertureKey 코드. 아래의 경우는 esc.
-		if (wParam == VK_ESCAPE)
-		{
-			//해당 윈도우를 파괴함.
-			DestroyWindow(hWnd);
-		}
-		return 0;
 	default:
 		break;
 	}

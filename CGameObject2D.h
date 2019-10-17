@@ -49,6 +49,8 @@ public:
 
 	void SetScaling(const XMVECTOR& Scaling);
 
+	void Translate(const XMVECTOR& Delta);
+
 	void SetObject2D(CObject2D* Object2D);
 
 	void SetTexture(CTexture* Texture);
@@ -59,6 +61,8 @@ public:
 
 public:
 	ESampler GetSampler() const;
+
+	const XMMATRIX& GetWorldMatrix() const;
 
 private:
 	void UpdateWorldMatrix();
